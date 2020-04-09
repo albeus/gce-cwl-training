@@ -1,7 +1,8 @@
 terraform {
   backend "gcs" {
-    bucket = "<my-project-id>-state-bucket" # Edit this this line to match your lab-networking/networking backend.tf file
+    bucket = "bioexcel-cwl_state-bucket"
     prefix = "terraform/lab/vm"
+    credentials = "credentials.json"
   }
 }
 
@@ -9,7 +10,8 @@ data "terraform_remote_state" "network" {
   backend = "gcs"
 
   config = {
-    bucket  = "<my-project-id>-state-bucket" # Update this too
+    bucket  = "bioexcel-cwl_state-bucket"
     prefix  = "terraform/lab/network"
+    credentials = "credentials.json"
   }
 }

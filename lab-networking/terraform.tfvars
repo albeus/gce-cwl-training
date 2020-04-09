@@ -1,1 +1,2 @@
-project_id="<my project id>"
+project_id="bioexcel-cwl"
+network_name="cwl-lab"

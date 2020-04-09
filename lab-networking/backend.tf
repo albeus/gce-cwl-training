@@ -1,6 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket = "my-state-bucket"       # Change this to <my project id>-state-bucket
+    bucket="bioexcel-cwl_state-bucket"
     prefix = "terraform/lab/network"
+    credentials = "credentials.json"
   }
 }

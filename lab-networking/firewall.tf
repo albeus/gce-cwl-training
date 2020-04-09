@@ -22,17 +22,3 @@ resource "google_compute_firewall" "allow-ssh" {
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["allow-ssh"]
 }
-
-resource "google_compute_firewall" "allow-http" {
-  name    = "allow-http"
-  network = google_compute_network.vpc.self_link
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80"]  # Edit this line
-  }
-
-  # Allow traffic from everywhere to instances with an http-server tag
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["allow-http"]
-}

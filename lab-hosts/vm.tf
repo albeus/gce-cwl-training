@@ -1,17 +1,19 @@
-data "google_compute_image" "ubuntu" {
-  family  = "ubuntu-1804-lts"
-  project = "ubuntu-os-cloud"
+data "google_compute_image" "cwl-lab" {
+  family    = "cwl-lab"
+  project   = var.project_id
 } 
 
 resource "google_compute_instance" "lab-vm" {
-  name         = "lab-instance"
+  name         = "lab-instance-${count.index}"
   project      = var.project_id
   machine_type = "n1-standard-2"
   zone         = var.zone
 
+  count = 3
+
   boot_disk {
     initialize_params {
-      image = data.google_compute_image.ubuntu.self_link
+      image = data.google_compute_image.cwl-lab.self_link
     }
   }
 
@@ -26,5 +28,5 @@ resource "google_compute_instance" "lab-vm" {
 
   metadata_startup_script =  ""
 
-  tags = ["allow-ping", "allow-ssh"]
+  tags = ["lab-vm", "allow-ping", "allow-ssh"]
 }

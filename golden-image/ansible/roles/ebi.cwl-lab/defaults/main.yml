@@ -1,0 +1,6 @@
+---
+# defaults file for ebi.cwl-lab
+
+student_user: "student"
+
+workflow_url: ""

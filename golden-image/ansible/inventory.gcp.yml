@@ -1,0 +1,11 @@
+plugin: gcp_compute
+projects:
+  - bioexcel-cwl
+zones: 
+  - europe-west2-a
+  - europe-west2-b
+auth_kind: serviceaccount
+service_account_file: ./credentials.json
+keyed_groups:
+  - prefix: gcp
+    key: labels

@@ -1,0 +1,59 @@
+---
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+    update_cache: yes 
+
+- name: Install required system packages
+  apt:
+    name:
+     - apt-transport-https
+     - ca-certificates
+     - curl
+     - software-properties-common
+     - aptitude
+    state: latest
+    update_cache: yes 
+    force_apt_get: yes
+
+- name: Install python packages
+  apt: 
+    name:
+      - virtualenv
+      - python-dev
+      - python-setuptools
+      - python3-pip
+      - python3-venv
+    state: latest
+    update_cache: yes 
+    force_apt_get: yes
+
+- name: Install docker
+  import_tasks: docker.yml
+
+# Run as the student user to configure his environment
+- block: 
+    - name: Install python requirements in virtualenv
+      pip:
+        name:
+          - toil[cwl]
+          - docker
+          - cwlref-runner
+        virtualenv: ~/cwl_bioexcel
+        virtualenv_python: python3
+
+    - name: Activate virtual env while login
+      lineinfile:
+        path: ~/.profile
+        state: present
+        line: 'source ~/cwl_bioexcel/bin/activate'
+    
+    - name: Cloning repo url - "{{ workflow_url }}"
+      git:
+        repo: '{{ workflow_url }}'
+        dest: /home/{{ student_user }}/workflow
+      when: workflow_url != ""
+
+  become: yes
+  become_user: '{{ student_user }}'

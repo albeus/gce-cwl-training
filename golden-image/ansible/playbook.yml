@@ -1,0 +1,11 @@
+---
+
+- hosts: gcp_vmrole_golden_image
+  gather_facts: no
+  remote_user: ubuntu
+  become: yes
+  vars:
+    - student_user: "student"
+    - workflow_url: ""
+  roles:
+    - ebi.cwl-lab

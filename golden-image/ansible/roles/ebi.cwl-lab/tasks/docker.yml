@@ -1,0 +1,24 @@
+---
+# Install docker-ce
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+ 
+- name: Install docker-ce
+  apt: 
+    name: docker-ce
+    state: latest
+    update_cache: yes
+
+- name: Enable user '{{ student_user }}' to use docker
+  user:
+    name: '{{ student_user }}'
+    comment: CWL lab user
+    groups: 
+      - docker

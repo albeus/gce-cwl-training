@@ -29,6 +29,13 @@
     update_cache: yes 
     force_apt_get: yes
 
+- name: Allow password authentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication"
+    line: "PasswordAuthentication yes"
+    state: present
+
 - name: Install docker
   import_tasks: docker.yml
 

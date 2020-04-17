@@ -1,7 +1,14 @@
 data "google_compute_image" "cwl-lab" {
   family    = "cwl-lab"
   project   = var.project_id
-} 
+}
+
+resource "random_password" "password" {
+  length = 10
+  special = true
+  override_special = "_%@"
+  count = 3
+}
 
 resource "google_compute_instance" "lab-vm" {
   name         = "lab-instance-${count.index}"
@@ -26,7 +33,7 @@ resource "google_compute_instance" "lab-vm" {
     }
   }
 
-  metadata_startup_script =  ""
+  metadata_startup_script =  "echo student:${random_password.password[count.index].result} | chpasswd"
 
   tags = ["lab-vm", "allow-ping", "allow-ssh"]
 }

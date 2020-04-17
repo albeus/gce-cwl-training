@@ -7,7 +7,7 @@ resource "random_password" "password" {
   length = 10
   special = true
   override_special = "_%@"
-  count = 3
+  count = var.hosts_number
 }
 
 resource "google_compute_instance" "lab-vm" {
@@ -16,7 +16,7 @@ resource "google_compute_instance" "lab-vm" {
   machine_type = "n1-standard-2"
   zone         = var.zone
 
-  count = 3
+  count = var.hosts_number
 
   boot_disk {
     initialize_params {

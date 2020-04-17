@@ -9,3 +9,8 @@ variable "zone" {
   description = "Default zone"
   default = "europe-west2-b"
 } 
+
+variable "hosts_number" {
+  description = "The number of machines to create."
+  default = 3
+} 

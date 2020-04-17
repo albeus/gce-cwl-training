@@ -54,7 +54,7 @@
       lineinfile:
         path: ~/.profile
         state: present
-        line: 'source ~/cwl_bioexcel/bin/activate'
+        line: '. ~/cwl_bioexcel/bin/activate'
     
     - name: Cloning repo url - "{{ workflow_url }}"
       git:

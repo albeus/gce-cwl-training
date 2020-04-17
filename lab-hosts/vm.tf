@@ -36,4 +36,6 @@ resource "google_compute_instance" "lab-vm" {
   metadata_startup_script =  "echo student:${random_password.password[count.index].result} | chpasswd"
 
   tags = ["lab-vm", "allow-ping", "allow-ssh"]
+
+  labels = { "vmrole"="lab-instance" }
 }

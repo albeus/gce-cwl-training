@@ -1,4 +1,4 @@
-# GCWL lab installer on GCE
+# CWL lab installer on GCE
 
 Configure an environment for CWL training on Google Compute Engine.
 
@@ -29,54 +29,67 @@ accessible by students using ssh.
 
 # Quickstart
 
-* [Configure the access to Google Cloud](https://cloud.google.com/sdk/docs/initializing).
+1. **[Configure the access to Google Cloud](https://cloud.google.com/sdk/docs/initializing)**.
 
-* Retrieve the credentials needed to operate with Terraform and Ansbile (it's strongly advised to use a specific service account):
-  ```
-  gcloud iam service-accounts keys create ./credentials.json --iam-account xxxxxxxxxxxxx@developer.gserviceaccount.com
-  ``` 
-  Copy it where required:
-  ```
-  cp ./credentials.json golden-image/ansible/
-  cp ./credentials.json lab-networking/
-  cp ./credentials.json lab-hosts/
-  ```
+1. **Retrieve the credentials** needed to operate with Terraform and Ansbile (it's strongly advised to use a specific service account):
+   ```bash
+   gcloud iam service-accounts keys create ./credentials.json --iam-account xxxxxxxxxxxxx@developer.gserviceaccount.com
+   ``` 
+   Copy it where required:
+   ```bash
+   cp ./credentials.json golden-image/ansible/
+   cp ./credentials.json lab-networking/
+   cp ./credentials.json lab-hosts/
+   ```
 
-* Create/Update the golden image:
-  ```
-  cd golden-image
-  ```
-  ```
-  make build_all
-  ```
-  Check if it's ok:
-  ```
-  make check_image_family
-  ```
+1. **Create/Update the golden image**
+   ```bash
+   cd golden-image
+   ```
+   ```bash
+   make build_all
+   ```
+   Check if it's ok:
+   ```bash
+   make check_image_family
+   ```
 
-* Create the network infrastructure
-  ```
-  cd lab-networking
-  ```
-  Configure the terraform variables (project_id, network_name).
-  And run terraform:
-  ```
-  terraform init
-  terraform apply
-  ```
-* Create the hosts
-  ```
-  cd lab-hosts
-  ```
-  Configure the terraform variables (project_id, network_name).
-  And run terraform:
-  ```
-  terraform init
-  terraform apply
-  ```
+1. **Create the network infrastructure**
+   ```bash
+   cd lab-networking
+   ```
+   Configure the terraform variables:
+   ```bash
+   cat << EOF > terraforma.tfvars
+   project_id="bioexcel-cwl"
+   network_name="cwl-lab"
+   EOF
+   ```
+   And run terraform:
+   ```bash
+   terraform init
+   terraform apply
+   ```
+1. **Create the hosts**
+   ```bash
+   cd lab-hosts
+   ```
+   Configure the terraform variables:
+   ```bash
+   cat << EOF > terraforma.tfvars
+   project_id="bioexcel-cwl"
+   hosts_number="3"
+   EOF
+   ```
+   And run terraform:
+   ```bash
+   terraform init
+   terraform apply
+   ```
+
 At the end you should have an output indicating the public IPs and the
 passwords for the user "student".
-```
+```python
 default_passwords = {
   "lab-instance-0" = "asdfasdfasdf"
   "lab-instance-1" = "qwerqwerreqw"
@@ -91,7 +104,7 @@ instances_ips = [
 ]
 ```
 
-# Acknoledgements
+# Acknowledgements
 
 This project is a fork of [terraform-codelab](https://github.com/morgante/terraform-codelab), used in
 the Qwiklab tutorial [VM Migration: Planning](https://www.qwiklabs.com/focuses/6899).

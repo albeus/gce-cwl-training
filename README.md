@@ -31,6 +31,14 @@ accessible by students using ssh.
 
 1. **[Configure the access to Google Cloud](https://cloud.google.com/sdk/docs/initializing)**.
 
+1. **Verify the existence of the bucket for the Terraform status file**: "bioexcel-cwl_state-bucket" (the bucket name is
+   hardcoded and can be changed updating the backend.tf files).
+
+   If missing create it:
+   ```bash
+   gsutil mb gs://bioexcel-cwl_state-bucket
+   ```
+
 1. **Retrieve the credentials** needed to operate with Terraform and Ansbile (it's strongly advised to use a specific service account):
    ```bash
    gcloud iam service-accounts keys create ./credentials.json --iam-account xxxxxxxxxxxxx@developer.gserviceaccount.com
